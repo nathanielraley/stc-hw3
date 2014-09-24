@@ -1,0 +1,48 @@
+Nathaniel Raley		Scientific & Technical Computing	Fall '14
+
+Profiling is an important technique that allows developers to analyze 
+the relative efficiency of their code in terms of memory demands, use of 
+time, number of function calls, and other important optimization-related 
+variables.
+
+	Profiling software allows users to set hardware counters that 
+collect important data about a program as it is executing. In the present 
+analysis, TAU was used with three such native metrics: LINUX_TIMERS 
+(runtime information), PAPI_FP_OPS (floating point operations), and PAPI_L1_DCM (Cache Data 
+Misses). Additionally, a derived metric was created from two of these native metrics: PAPI_FP_OPS was divided by LINUX_TIMERS 
+resulting in a metric that quantifies the number of floating point 
+operations per second. After running the program (a numerical integration
+program from HW2), these hardware counters were analyzed using ParaProf.
+	
+	All profiled functions and the time they took to run appear 
+in "linux_timers.jpg". The main function spend 38/1000 of a second 
+running, accounting for most of the time. All of the other routines 
+accounted a smaller portion of the time at just 2/1000 and 1/1000 of 
+a second each. 
+
+	"papi_fp_ops.jpg" shows the number of floating point 
+operations each function performed. My trapezoid function performed 
+the most, at 2959345; my Simpson's Formula function performed the 
+second most at 2555647, and my Midpoint Formula performed the fewest 
+number at 1777707. The main program also performed 728. My functions 
+seem to have performed way to many operations for such a simple 
+task and steps should be taken to optimize this code.
+
+	Finally, the derived metric gives the floating point 
+operations per second for the node on which this code was run. The 
+trapezoid function was 1.3343x10^9, the midpoint function was 
+1.3331x10^9, and the Simpson's rule function was 1.3019x10^9. Thus, 
+the FLOPS were around one billion, ~ 1.3 gigaflops.
+
+Overall, the profiling exercise has indicated that my numerical
+integration code could be improved upon. I could eliminate 
+function calls in my loops and I know there is some way to reduce 
+the number of calculations. My overall number of operations was 
+so high because I call the function for each value of n that I 
+used; I did this for formatting reasons, because I could not get 
+my output to tab correctly, but now I can see that the 
+performance costs were substantial. 
+
+
+
+
